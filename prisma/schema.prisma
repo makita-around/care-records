@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ヘルパー
+model Helper {
+  id        Int      @id @default(autoincrement())
+  lastName  String
+  firstName String
+  active    Boolean  @default(true)
+  isGuest   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  records   Record[]
+}
+
+// 利用者
+model Client {
+  id             Int      @id @default(autoincrement())
+  lastName       String
+  firstName      String
+  gender         String   // 男 or 女
+  defaultServiceId Int?
+  signatureMode  String   @default("stamp") // stamp or handwritten
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  records        Record[]
+  defaultService ServiceType? @relation(fields: [defaultServiceId], references: [id])
+  weeklyDefaults DefaultWeeklyService[]
+}
+
+// サービス種別
+model ServiceType {
+  id             Int      @id @default(autoincrement())
+  name           String   // 身体1, 身1生1, etc.
+  defaultMinutes Int      // デフォルト時間（分）
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  clients        Client[]
+  records        Record[]
+  weeklyDefaults DefaultWeeklyService[]
+}
+
+// 週間デフォルトサービス
+model DefaultWeeklyService {
+  id            Int         @id @default(autoincrement())
+  clientId      Int
+  client        Client      @relation(fields: [clientId], references: [id])
+  serviceTypeId Int
+  serviceType   ServiceType @relation(fields: [serviceTypeId], references: [id])
+  dayOfWeek     Int         // 0=日, 1=月, 2=火, 3=水, 4=木, 5=金, 6=土
+  startTime     String      // HH:MM
+  endTime       String      // HH:MM
+  createdAt     DateTime    @default(now())
+
+  @@index([clientId, dayOfWeek])
+}
+
+// 設定
+model Setting {
+  key   String @id
+  value String
+}
+
+// 提供記録
+model Record {
+  id            Int      @id @default(autoincrement())
+  clientId      Int
+  helperId      Int
+  serviceTypeId Int
+  date          String   // YYYY-MM-DD
+  startTime     String   // HH:MM
+  endTime       String   // HH:MM
+  totalMinutes  Int
+  bodycare      Boolean  @default(false) // 身体区分
+  lifeSupport   Boolean  @default(false) // 生活区分
+  // チェック項目（身体介護10項目）
+  checkToilet       Boolean @default(false) // 排泄介助
+  checkDiaper       Boolean @default(false) // おむつ交換
+  checkMeal         Boolean @default(false) // 食事介助
+  checkBath         Boolean @default(false) // 入浴介助・清拭
+  checkOral         Boolean @default(false) // 口腔ケア(整容)
+  checkMedicine     Boolean @default(false) // 服薬介助
+  checkTransfer     Boolean @default(false) // 移乗・移動介助
+  checkOuting       Boolean @default(false) // 外出介助
+  checkDressing     Boolean @default(false) // 更衣介助
+  checkJointCleaning Boolean @default(false) // 共同実践掃除
+
+  // チェック項目（生活援助5項目）
+  checkCleaning     Boolean @default(false) // 掃除
+  checkLaundry      Boolean @default(false) // 洗濯
+  checkClothes      Boolean @default(false) // 衣服整理
+  checkSheets       Boolean @default(false) // シーツ交換
+  checkBathPrep     Boolean @default(false) // 入浴準備
+  checkLifeOther    Boolean @default(false) // その他
+  note          String  @default("") // 特記事項
+  confirmed     Boolean @default(false) // 利用者確認済み
+  signatureData String  @default("") // 手書きサイン（Base64）
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  client      Client      @relation(fields: [clientId], references: [id])
+  helper      Helper      @relation(fields: [helperId], references: [id])
+  serviceType ServiceType @relation(fields: [serviceTypeId], references: [id])
+
+  @@index([clientId, date])
+  @@index([helperId, date])
+}
