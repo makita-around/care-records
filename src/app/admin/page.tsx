@@ -8,6 +8,7 @@ const menuItems = [
   { href: "/admin/services", title: "サービス種別管理", desc: "サービス種別の追加・編集" },
   { href: "/admin/records", title: "記録一覧", desc: "全記録の確認・検索" },
   { href: "/admin/export", title: "PDF / CSV出力", desc: "利用者別・期間指定で出力" },
+  { href: "/admin/performance", title: "実績出力", desc: "月別・利用者別の予実カレンダー出力" },
   { href: "/admin/settings", title: "設定", desc: "事業所名・サービス提供責任者名の設定" },
 ];
 

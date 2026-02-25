@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { downloadPdf } from "@/lib/downloadPdf";
 
 type Client = { id: number; lastName: string; firstName: string };
 
@@ -87,8 +88,7 @@ export default function ExportPage() {
     setExporting(false);
   };
 
-  const exportPDF = async () => {
-    setExporting(true);
+  const buildPDFHtml = async () => {
     const [records, settings] = await Promise.all([
       fetchRecordsForExport(),
       fetch("/api/settings").then((r) => r.json()),
@@ -287,7 +287,23 @@ export default function ExportPage() {
     }
 
     html += `</body></html>`;
+    return html;
+  };
 
+  const getExportFileName = () => {
+    const clientName =
+      selectedClientId === "all"
+        ? "全員"
+        : (() => {
+            const c = clients.find((c) => c.id === selectedClientId);
+            return c ? `${c.lastName}${c.firstName}` : "不明";
+          })();
+    return `サービス提供記録_${startDate}_${clientName}`;
+  };
+
+  const exportPrint = async () => {
+    setExporting(true);
+    const html = await buildPDFHtml();
     const printWindow = window.open("", "_blank");
     if (printWindow) {
       printWindow.document.write(html);
@@ -295,6 +311,17 @@ export default function ExportPage() {
       printWindow.onload = () => printWindow.print();
     }
     setExporting(false);
+  };
+
+  const exportPDF = async () => {
+    setExporting(true);
+    try {
+      const fileName = getExportFileName();
+      const html = await buildPDFHtml();
+      await downloadPdf(html, fileName, "portrait");
+    } finally {
+      setExporting(false);
+    }
   };
 
   if (loading) return <div className="flex items-center justify-center min-h-screen"><p className="text-gray-500">読み込み中...</p></div>;
@@ -352,7 +379,14 @@ export default function ExportPage() {
             disabled={exporting}
             className="flex-1 bg-red-600 text-white rounded-lg p-4 font-bold hover:bg-red-700 disabled:bg-gray-300"
           >
-            PDF出力（印刷）
+            PDF出力
+          </button>
+          <button
+            onClick={exportPrint}
+            disabled={exporting}
+            className="flex-1 bg-blue-600 text-white rounded-lg p-4 font-bold hover:bg-blue-700 disabled:bg-gray-300"
+          >
+            印刷
           </button>
           <button
             onClick={exportCSV}

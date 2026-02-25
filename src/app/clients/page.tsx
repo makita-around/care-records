@@ -61,7 +61,7 @@ export default function ClientsPage() {
           onClick={() => router.push("/daily-records")}
           className="bg-orange-500 text-white text-sm px-3 py-2 rounded-lg font-bold hover:bg-orange-600 transition-colors"
         >
-          記録一覧
+          本日の記録一覧
         </button>
       </div>
 

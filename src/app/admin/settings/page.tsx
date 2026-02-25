@@ -33,6 +33,10 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [backupPath, setBackupPath] = useState("");
+  const [lastBackupAt, setLastBackupAt] = useState("");
+  const [backingUp, setBackingUp] = useState(false);
+  const [backupMsg, setBackupMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
   useEffect(() => {
     fetch("/api/settings")
@@ -46,6 +50,8 @@ export default function SettingsPage() {
           labels[item.key] = data[`checkLabel_${item.key}`] || item.label;
         }
         setCheckLabels(labels);
+        setBackupPath(data.backupPath || "");
+        setLastBackupAt(data.lastBackupAt || "");
         setLoading(false);
       });
   }, []);
@@ -59,11 +65,28 @@ export default function SettingsPage() {
     await fetch("/api/settings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ coordinator, officeName, signatureMode, ...checkLabelSettings }),
+      body: JSON.stringify({ coordinator, officeName, signatureMode, backupPath, ...checkLabelSettings }),
     });
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
+  };
+
+  const handleBackup = async () => {
+    setBackingUp(true);
+    setBackupMsg(null);
+    const res = await fetch("/api/backup", { method: "POST" });
+    const data = await res.json();
+    setBackingUp(false);
+    setBackupMsg({ ok: data.ok, text: data.message });
+    if (data.ok) setLastBackupAt(new Date().toISOString());
+    setTimeout(() => setBackupMsg(null), 4000);
+  };
+
+  const formatDate = (iso: string) => {
+    if (!iso) return "";
+    const d = new Date(iso);
+    return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
   };
 
   if (loading) return <div className="flex items-center justify-center min-h-screen"><p className="text-gray-500">読み込み中...</p></div>;
@@ -164,6 +187,39 @@ export default function SettingsPage() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* バックアップ */}
+      <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm mb-4">
+        <h2 className="font-bold text-gray-700 mb-3">バックアップ</h2>
+        <div className="space-y-3">
+          <div>
+            <label className="block text-sm font-bold text-gray-600 mb-1">バックアップ先フォルダ</label>
+            <input
+              type="text"
+              value={backupPath}
+              onChange={(e) => setBackupPath(e.target.value)}
+              placeholder="例: G:\マイドライブ\施設バックアップ"
+              className="w-full border border-gray-300 rounded-lg p-3 text-sm"
+            />
+            <p className="text-xs text-gray-400 mt-1">Googleドライブ等のフォルダパスを入力してください</p>
+          </div>
+          {lastBackupAt && (
+            <p className="text-xs text-gray-500">最終バックアップ: {formatDate(lastBackupAt)}</p>
+          )}
+          <button
+            onClick={handleBackup}
+            disabled={backingUp || !backupPath.trim()}
+            className="w-full bg-gray-600 text-white rounded-lg p-3 font-bold hover:bg-gray-700 disabled:bg-gray-300 text-sm"
+          >
+            {backingUp ? "バックアップ中..." : "今すぐバックアップ"}
+          </button>
+          {backupMsg && (
+            <p className={`text-sm text-center font-medium ${backupMsg.ok ? "text-green-600" : "text-red-500"}`}>
+              {backupMsg.ok ? "✓ " : "✗ "}{backupMsg.text}
+            </p>
+          )}
         </div>
       </div>
 

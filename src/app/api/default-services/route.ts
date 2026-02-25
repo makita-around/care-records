@@ -6,23 +6,40 @@ function getDb() {
   return new Database(path.join(process.cwd(), "prisma/dev.db"));
 }
 
-// GET /api/default-services?clientId=xxx
+// GET /api/default-services?clientId=xxx  OR  ?dayOfWeek=N (全利用者の当日デフォルト)
 export async function GET(req: NextRequest) {
   const clientId = req.nextUrl.searchParams.get("clientId");
-  if (!clientId) {
-    return NextResponse.json({ error: "clientId required" }, { status: 400 });
+  const dayOfWeek = req.nextUrl.searchParams.get("dayOfWeek");
+
+  if (!clientId && dayOfWeek === null) {
+    return NextResponse.json({ error: "clientId or dayOfWeek required" }, { status: 400 });
   }
+
   const db = getDb();
-  const rows = db
-    .prepare(
-      `SELECT d.id, d.clientId, d.serviceTypeId, d.dayOfWeek, d.startTime, d.endTime,
-              s.name as serviceTypeName, s.defaultMinutes
-       FROM DefaultWeeklyService d
-       JOIN ServiceType s ON s.id = d.serviceTypeId
-       WHERE d.clientId = ?
-       ORDER BY d.dayOfWeek, d.startTime`
-    )
-    .all(parseInt(clientId));
+  let rows;
+  if (clientId) {
+    rows = db
+      .prepare(
+        `SELECT d.id, d.clientId, d.serviceTypeId, d.dayOfWeek, d.startTime, d.endTime,
+                s.name as serviceTypeName, s.defaultMinutes
+         FROM DefaultWeeklyService d
+         JOIN ServiceType s ON s.id = d.serviceTypeId
+         WHERE d.clientId = ?
+         ORDER BY d.dayOfWeek, d.startTime`
+      )
+      .all(parseInt(clientId));
+  } else {
+    rows = db
+      .prepare(
+        `SELECT d.id, d.clientId, d.serviceTypeId, d.dayOfWeek, d.startTime, d.endTime,
+                s.name as serviceTypeName, s.defaultMinutes
+         FROM DefaultWeeklyService d
+         JOIN ServiceType s ON s.id = d.serviceTypeId
+         WHERE d.dayOfWeek = ?
+         ORDER BY d.clientId, d.startTime`
+      )
+      .all(parseInt(dayOfWeek!));
+  }
   db.close();
   return NextResponse.json(rows);
 }
