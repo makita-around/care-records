@@ -1,26 +1,25 @@
 @echo off
-chcp 65001 >nul
 echo.
-echo  ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã«ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã‚’ä½œæˆã—ã¦ã„ã¾ã™...
+echo  ƒfƒXƒNƒgƒbƒv‚ÉƒVƒ‡[ƒgƒJƒbƒg‚ðì¬‚µ‚Ä‚¢‚Ü‚·...
 echo.
 
-copy /Y "C:\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒª\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒªèµ·å‹•.vbs" "%USERPROFILE%\Desktop\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒªèµ·å‹•.vbs" >nul
+copy /Y "C:\–K–â‰îŒìƒAƒvƒŠ\–K–â‰îŒìƒAƒvƒŠ‹N“®.vbs" "%USERPROFILE%\Desktop\–K–â‰îŒìƒAƒvƒŠ‹N“®.vbs" >nul
 
 (
   echo [InternetShortcut]
   echo URL=http://localhost:3000
-) > "%USERPROFILE%\Desktop\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒªã‚’é–‹ã.url"
+) > "%USERPROFILE%\Desktop\–K–â‰îŒìƒAƒvƒŠ‚ðŠJ‚­.url"
 
 echo  ========================================
 echo.
-echo    ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ãŒå®Œäº†ã—ã¾ã—ãŸï¼
+echo    ƒZƒbƒgƒAƒbƒv‚ªŠ®—¹‚µ‚Ü‚µ‚½I
 echo.
-echo    ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã«2ã¤ã®ã‚¢ã‚¤ã‚³ãƒ³ãŒä½œæˆã•ã‚Œã¾ã—ãŸã€‚
+echo    ƒfƒXƒNƒgƒbƒv‚É2‚Â‚ÌƒAƒCƒRƒ“‚ªì¬‚³‚ê‚Ü‚µ‚½B
 echo.
-echo    ã€æ¯Žæ—¥ã®èµ·å‹•æ‰‹é †ã€‘
-echo    1.ã€Œè¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒªèµ·å‹•ã€ã‚’ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯
-echo    2. ç´„30ç§’å¾…ã¤
-echo    3. ãƒ–ãƒ©ã‚¦ã‚¶ãŒè‡ªå‹•ã§é–‹ãã¾ã™
+echo    y–ˆ“ú‚Ì‹N“®Žè‡z
+echo    1.u–K–â‰îŒìƒAƒvƒŠ‹N“®v‚ðƒ_ƒuƒ‹ƒNƒŠƒbƒN
+echo    2. –ñ30•b‘Ò‚Â
+echo    3. ƒuƒ‰ƒEƒU‚ªŽ©“®‚ÅŠJ‚«‚Ü‚·
 echo.
 echo  ========================================
 echo.

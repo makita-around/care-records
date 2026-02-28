@@ -1,67 +1,66 @@
 @echo off
-chcp 65001 > nul
 echo.
 echo ============================================
-echo   è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒª  ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
+echo   –K–â‰îŒìƒAƒvƒŠ  ƒAƒbƒvƒf[ƒg
 echo ============================================
 echo.
 
-:: ã‚¢ãƒ—ãƒªãƒ•ã‚©ãƒ«ãƒ€ã«ç§»å‹•
-cd /d C:\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒª
+:: ƒAƒvƒŠƒtƒHƒ‹ƒ_‚ÉˆÚ“®
+cd /d C:\–K–â‰îŒìƒAƒvƒŠ
 if %errorlevel% neq 0 (
-    echo ã€ã‚¨ãƒ©ãƒ¼ã€‘ã‚¢ãƒ—ãƒªãƒ•ã‚©ãƒ«ãƒ€ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚
-    echo åˆå›žã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ãŒå®Œäº†ã—ã¦ã„ã‚‹ã‹ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+    echo yƒGƒ‰[zƒAƒvƒŠƒtƒHƒ‹ƒ_‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB
+    echo ‰‰ñƒZƒbƒgƒAƒbƒv‚ªŠ®—¹‚µ‚Ä‚¢‚é‚©Šm”F‚µ‚Ä‚­‚¾‚³‚¢B
     echo.
     pause
     exit /b 1
 )
 
-echo [1/4] æœ€æ–°ç‰ˆã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦ã„ã¾ã™...
-echo       ï¼ˆã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆæŽ¥ç¶šãŒå¿…è¦ã§ã™ï¼‰
+echo [1/4] ÅV”Å‚ðƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä‚¢‚Ü‚·...
+echo       iƒCƒ“ƒ^[ƒlƒbƒgÚ‘±‚ª•K—v‚Å‚·j
 echo.
 git pull
 if %errorlevel% neq 0 (
     echo.
-    echo ã€ã‚¨ãƒ©ãƒ¼ã€‘ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸã€‚
-    echo ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆã«æŽ¥ç¶šã•ã‚Œã¦ã„ã‚‹ã‹ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+    echo yƒGƒ‰[zƒ_ƒEƒ“ƒ[ƒh‚ÉŽ¸”s‚µ‚Ü‚µ‚½B
+    echo ƒCƒ“ƒ^[ƒlƒbƒg‚ÉÚ‘±‚³‚ê‚Ä‚¢‚é‚©Šm”F‚µ‚Ä‚­‚¾‚³‚¢B
     echo.
     pause
     exit /b 1
 )
 
 echo.
-echo [2/4] å¿…è¦ãªãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ›´æ–°ã—ã¦ã„ã¾ã™...
+echo [2/4] •K—v‚Èƒtƒ@ƒCƒ‹‚ðXV‚µ‚Ä‚¢‚Ü‚·...
 call npm install --silent
 if %errorlevel% neq 0 (
-    echo ã€ã‚¨ãƒ©ãƒ¼ã€‘ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚
+    echo yƒGƒ‰[zƒtƒ@ƒCƒ‹‚ÌXV‚ÉŽ¸”s‚µ‚Ü‚µ‚½B
     pause
     exit /b 1
 )
 
 echo.
-echo [3/4] ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‚’æ›´æ–°ã—ã¦ã„ã¾ã™...
+echo [3/4] ƒf[ƒ^ƒx[ƒXƒNƒ‰ƒCƒAƒ“ƒg‚ðXV‚µ‚Ä‚¢‚Ü‚·...
 call npx prisma generate
 
 echo.
-echo [4/5] ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚’æ›´æ–°ã—ã¦ã„ã¾ã™...
+echo [4/5] ƒf[ƒ^ƒx[ƒX‚ðXV‚µ‚Ä‚¢‚Ü‚·...
 call npx prisma migrate deploy
 if %errorlevel% neq 0 (
-    echo ã€ã‚¨ãƒ©ãƒ¼ã€‘ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚
+    echo yƒGƒ‰[zƒf[ƒ^ƒx[ƒX‚ÌXV‚ÉŽ¸”s‚µ‚Ü‚µ‚½B
     pause
     exit /b 1
 )
 
 echo.
-echo [5/5] ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã®ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã‚’æ›´æ–°ã—ã¦ã„ã¾ã™...
-copy /Y "C:\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒª\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒªèµ·å‹•.vbs" "%USERPROFILE%\Desktop\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒªèµ·å‹•.vbs" >nul
-copy /Y "C:\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒª\æ›´æ–°.bat" "%USERPROFILE%\Desktop\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒªæ›´æ–°.bat" >nul
+echo [5/5] ƒfƒXƒNƒgƒbƒv‚ÌƒVƒ‡[ƒgƒJƒbƒg‚ðXV‚µ‚Ä‚¢‚Ü‚·...
+copy /Y "C:\–K–â‰îŒìƒAƒvƒŠ\–K–â‰îŒìƒAƒvƒŠ‹N“®.vbs" "%USERPROFILE%\Desktop\–K–â‰îŒìƒAƒvƒŠ‹N“®.vbs" >nul
+copy /Y "C:\–K–â‰îŒìƒAƒvƒŠ\XV.bat" "%USERPROFILE%\Desktop\–K–â‰îŒìƒAƒvƒŠXV.bat" >nul
 
 echo.
 echo ============================================
-echo   ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆãŒå®Œäº†ã—ã¾ã—ãŸï¼
+echo   ƒAƒbƒvƒf[ƒg‚ªŠ®—¹‚µ‚Ü‚µ‚½I
 echo.
-echo   ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã®ã€Œè¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒªèµ·å‹•ã€ã‚’
-echo   ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯ã—ã¦ã‚¢ãƒ—ãƒªã‚’å†èµ·å‹•ã—ã¦ãã ã•ã„ã€‚
+echo   ƒfƒXƒNƒgƒbƒv‚Ìu–K–â‰îŒìƒAƒvƒŠ‹N“®v‚ð
+echo   ƒ_ƒuƒ‹ƒNƒŠƒbƒN‚µ‚ÄƒAƒvƒŠ‚ðÄ‹N“®‚µ‚Ä‚­‚¾‚³‚¢B
 echo ============================================
 echo.
 pause

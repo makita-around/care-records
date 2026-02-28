@@ -1,24 +1,23 @@
 @echo off
-chcp 65001 > nul
-title è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒª èµ·å‹•ä¸­...
+title –K–â‰îŒìƒAƒvƒŠ ‹N“®’†...
 
-:: ãƒãƒ¼ãƒˆ3000ã‚’è§£æ”¾
+:: ƒ|[ƒg3000‚ð‰ð•ú
 for /f "tokens=5" %%a in ('netstat -aon 2^>nul ^| find ":3000" ^| find "LISTENING"') do (
     taskkill /F /PID %%a >nul 2>&1
 )
 
 timeout /t 1 /nobreak >nul
 
-:: ãƒ“ãƒ«ãƒ‰ï¼†æœ¬ç•ªã‚µãƒ¼ãƒãƒ¼èµ·å‹•
-echo ãƒ“ãƒ«ãƒ‰ä¸­...ï¼ˆã—ã°ã‚‰ããŠå¾…ã¡ãã ã•ã„ï¼‰
-cd /d C:\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒª
+:: ƒrƒ‹ƒh•–{”ÔƒT[ƒo[‹N“®
+echo ƒrƒ‹ƒh’†...i‚µ‚Î‚ç‚­‚¨‘Ò‚¿‚­‚¾‚³‚¢j
+cd /d C:\–K–â‰îŒìƒAƒvƒŠ
 call npm run build >nul 2>&1
 
-:: ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ã§æœ¬ç•ªã‚µãƒ¼ãƒãƒ¼èµ·å‹•
-start "" /B cmd /c "cd /d C:\è¨ªå•ä»‹è­·ã‚¢ãƒ—ãƒª && npm run start -- --hostname 0.0.0.0 >nul 2>&1"
+:: ƒoƒbƒNƒOƒ‰ƒEƒ“ƒh‚Å–{”ÔƒT[ƒo[‹N“®
+start "" /B cmd /c "cd /d C:\–K–â‰îŒìƒAƒvƒŠ && npm run start -- --hostname 0.0.0.0 >nul 2>&1"
 
-:: 5ç§’å¾…ã£ã¦ã‹ã‚‰ãƒ–ãƒ©ã‚¦ã‚¶ã‚’é–‹ã
-echo ã‚µãƒ¼ãƒãƒ¼èµ·å‹•ä¸­...ï¼ˆ5ç§’ãŠå¾…ã¡ãã ã•ã„ï¼‰
+:: 5•b‘Ò‚Á‚Ä‚©‚çƒuƒ‰ƒEƒU‚ðŠJ‚­
+echo ƒT[ƒo[‹N“®’†...i5•b‚¨‘Ò‚¿‚­‚¾‚³‚¢j
 timeout /t 5 /nobreak >nul
 
 start "" "http://localhost:3000"
