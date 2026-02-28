@@ -4,7 +4,7 @@ echo.
 echo  デスクトップにショートカットを作成しています...
 echo.
 
-copy /Y "C:\care-records\訪問介護アプリ起動.vbs" "%USERPROFILE%\Desktop\訪問介護アプリ起動.vbs" >nul
+copy /Y "C:\訪問介護アプリ\訪問介護アプリ起動.vbs" "%USERPROFILE%\Desktop\訪問介護アプリ起動.vbs" >nul
 
 (
   echo [InternetShortcut]
@@ -19,7 +19,7 @@ echo    デスクトップに2つのアイコンが作成されました。
 echo.
 echo    【毎日の起動手順】
 echo    1.「訪問介護アプリ起動」をダブルクリック
-echo    2. 約10秒待つ
+echo    2. 約30秒待つ
 echo    3. ブラウザが自動で開きます
 echo.
 echo  ========================================
