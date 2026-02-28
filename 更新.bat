@@ -43,13 +43,18 @@ echo [3/4] データベースクライアントを更新しています...
 call npx prisma generate
 
 echo.
-echo [4/4] データベースを更新しています...
+echo [4/5] データベースを更新しています...
 call npx prisma migrate deploy
 if %errorlevel% neq 0 (
     echo 【エラー】データベースの更新に失敗しました。
     pause
     exit /b 1
 )
+
+echo.
+echo [5/5] デスクトップのショートカットを更新しています...
+copy /Y "C:\訪問介護アプリ\訪問介護アプリ起動.vbs" "%USERPROFILE%\Desktop\訪問介護アプリ起動.vbs" >nul
+copy /Y "C:\訪問介護アプリ\更新.bat" "%USERPROFILE%\Desktop\訪問介護アプリ更新.bat" >nul
 
 echo.
 echo ============================================
